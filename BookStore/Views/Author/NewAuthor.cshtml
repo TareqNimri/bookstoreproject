@@ -1,0 +1,107 @@
+﻿@model vmAuthor
+
+
+@section Body{
+    <form method="post" enctype="multipart/form-data">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Author List</h2>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Author item in Model.authors)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@item.Firstname</td>
+                                    <td><img src="@item.ImagePath" style="width:80px;" /></td>
+                                    <td><a asp-action="Edit" asp-route-Id="@item.Id">Edit </a>|<a asp-action="DeleteAuthor" asp-route-Id="@item.Id">Delete</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <input type="hidden" asp-for="author.Id" />
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Add New Author</h2>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">First Name</label>
+                        <input type="text" class="form-control" asp-for="author.Firstname" />
+                        <span asp-validation-for="author.Firstname"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Last Name</label>
+                        <input type="text" class="form-control" asp-for="author.Lastname" />
+                        <span asp-validation-for="author.Firstname"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Nationality</label>
+                        <select type="text" class="form-control" asp-for="author.Nat_Id" asp-items='new SelectList(Model.nationalities, "Id", "Name")'  ></select>
+                        
+                    </div>
+                </div>
+            </div>
+
+           
+                <div class="row" style="margin-top:5px;">
+                    <div class="col-lg-5">
+                        <input type="file" asp-for="author.Image" id="Uploadimages" style="display:none;" />
+                        <label class="btn btn-primary" for="Uploadimages">Upload Image</label>
+                    </div>
+
+                </div>
+                <div class="row" style="margin-top:5px;">
+
+                    <div class="col-lg-12">
+                        @if ((bool)ViewData["IsEdited"] == false)
+                        {
+                            <input type="submit" class="btn btn-primary" asp-action="Save" value="Save" />
+                        }
+                        else
+                        {
+                            <input type="submit" class="btn btn-primary" asp-action="Update" value="Update" />
+                        }
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+    </form>
+
+}

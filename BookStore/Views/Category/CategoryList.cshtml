@@ -1,0 +1,87 @@
+﻿@model vmCategory
+
+
+
+@section Body{
+    <form method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Category List</h2>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Category Code</th>
+                                <th>Category Name</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Category item in Model.categories)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@item.CategoryCode</td>
+                                    <td>@item.Name</td>
+                                    <td><a asp-action="Edit" asp-route-Id="@item.Id">Edit </a>|<a asp-action="DeleteCat" asp-route-Id="@item.Id">Delete</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Add New Category</h2>
+                </div>
+            </div>
+            <input type="hidden" asp-for="category.Id" />
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Category Code</label>
+                        <input type="text" class="form-control" asp-for="category.CategoryCode" />
+                        <span asp-validation-for="category.CategoryCode"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Category Name</label>
+                        <input type="text" class="form-control" asp-for="category.Name" />
+                        <span asp-validation-for="category.Name"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    @if ((bool)ViewData["IsEdited"] == false)
+                    {
+                        <input type="submit" class="btn btn-primary" value="Save" asp-action="SaveCategory" />
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-primary" value="Update" asp-action="Update" />
+                    }
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+</form>
+}

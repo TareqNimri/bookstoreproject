@@ -1,0 +1,145 @@
+﻿
+@model vmBook
+
+
+@section Body{
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Book List</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Book Title</th>
+                                <th>Cover</th>
+                                <th>Year</th>
+                                <th>Price</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Stock</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Book item in Model.books)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@item.Title</td>
+                                    <td><img src="@item.ImagePath" style="width:80px;" /></td>
+                                    <td>@item.Year</td>
+                                    <td>@item.Price</td>
+                                    <td>@item.categories.Name</td>
+                                    <td>@item.authors.Firstname</td>
+                                    <td>@item.Stock</td>
+                                    <td><a asp-action="Edit" asp-route-Id="@item.Id">Edit </a>|<a asp-action="DeleteBook" asp-route-Id="@item.Id">Delete</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+            <input type="hidden" asp-for="book.Id" />
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Add New Book</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Book Title</label>
+                        <input type="text" class="form-control" asp-for="book.Title" />
+                        <span asp-validation-for="book.Title"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Year</label>
+                        <input type="text" class="form-control" asp-for="book.Year" />
+                        <span asp-validation-for="book.Year"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Price</label>
+                        <input type="text" class="form-control" asp-for="book.Price" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Category</label>
+                        <select class="form-control" asp-for="book.Cat_Id" asp-items='new SelectList(Model.licategories, "Id", "Name")'></select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Author</label>
+                        <select class="form-control" asp-for="book.Auth_Id" asp-items='new SelectList(Model.liauthors, "Id", "Firstname")'></select>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:5px;">
+                <div class="col-lg-4">
+                    <input type="file" asp-for="book.Image" id="Uploadcoverimages" style="display:none;" />
+                    <label class="btn btn-primary" for="Uploadcoverimages">Cover Photo</label>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Stock</label>
+                        <input type="text" class="form-control" asp-for="book.Stock" />
+
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="row" style="margin-top:5px;">
+
+                <div class="col-lg-12">
+                    @if ((bool)ViewData["IsEdited"] == false)
+                    {
+                        <input type="submit" class="btn btn-primary" asp-action="Save" value="Save" />
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-primary" asp-action="Update" value="Update" />
+                    }
+                </div>
+            </div>
+
+
+        </div>
+
+
+</form>
+
+}
